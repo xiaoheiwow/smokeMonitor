@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.xhw.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="me.xhw.entity.Order">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="hospital_id" jdbcType="BIGINT" property="hospitalId" />
+    <result column="handler_name" jdbcType="VARCHAR" property="handlerName" />
+    <result column="pusher_name" jdbcType="VARCHAR" property="pusherName" />
+    <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
+    <result column="alarm_type" jdbcType="VARCHAR" property="alarmType" />
+    <result column="order_progress" jdbcType="VARCHAR" property="orderProgress" />
+    <result column="priority" jdbcType="VARCHAR" property="priority" />
+    <result column="situation" jdbcType="INTEGER" property="situation" />
+    <result column="handler_phone" jdbcType="VARCHAR" property="handlerPhone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,hospital_id,handler_name,pusher_name,order_number,alarm_type,order_progress,priority,situation,handler_phone,address,create_time,modify_time,create_by,modify_by,remarks
+  </sql>
+  <sql id="sql_where">
+    <where>
+      <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+      <if test="null != data.hospitalId and '' != data.hospitalId">and hospital_id = #{data.hospitalId}</if>
+      <if test="null != data.handlerName and '' != data.handlerName">and handler_name = #{data.handlerName}</if>
+      <if test="null != data.pusherName and '' != data.pusherName">and pusher_name = #{data.pusherName}</if>
+      <if test="null != data.orderNumber and '' != data.orderNumber">and order_number = #{data.orderNumber}</if>
+      <if test="null != data.alarmType and '' != data.alarmType">and alarm_type = #{data.alarmType}</if>
+      <if test="null != data.orderProgress and '' != data.orderProgress">and order_progress = #{data.orderProgress}</if>
+      <if test="null != data.priority and '' != data.priority">and priority = #{data.priority}</if>
+      <if test="null != data.situation and '' != data.situation">and situation = #{data.situation}</if>
+      <if test="null != data.handlerPhone and '' != data.handlerPhone">and handler_phone = #{data.handlerPhone}</if>
+      <if test="null != data.address and '' != data.address">and address = #{data.address}</if>
+      <if test="null != data.createTime and '' != data.createTime">and create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime and '' != data.modifyTime">and modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy and '' != data.createBy">and create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy and '' != data.modifyBy">and modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks and '' != data.remarks">and remarks = #{data.remarks}</if>
+	</where>
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+	  <include refid="Base_Column_List" />
+	  from
+	  order
+	where id = #{id}
+  </select>
+  <delete id="deleteByIds">
+    delete from order where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="deleteById">
+    delete from order where id =#{id}
+  </delete>
+  <sql id="sql_update">
+    update `order`
+	<trim prefix="set" prefixOverrides=",">
+      <if test="null != data.id">, id = #{data.id}</if>
+      <if test="null != data.hospitalId">, hospital_id = #{data.hospitalId}</if>
+      <if test="null != data.handlerName">, handler_name = #{data.handlerName}</if>
+      <if test="null != data.pusherName">, pusher_name = #{data.pusherName}</if>
+      <if test="null != data.orderNumber">, order_number = #{data.orderNumber}</if>
+      <if test="null != data.alarmType">, alarm_type = #{data.alarmType}</if>
+      <if test="null != data.orderProgress">, order_progress = #{data.orderProgress}</if>
+      <if test="null != data.priority">, priority = #{data.priority}</if>
+      <if test="null != data.situation">, situation = #{data.situation}</if>
+      <if test="null != data.handlerPhone">, handler_phone = #{data.handlerPhone}</if>
+      <if test="null != data.address">, address = #{data.address}</if>
+      <if test="null != data.createTime">, create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime">, modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy">, create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy">, modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks">, remarks = #{data.remarks}</if>
+	</trim>
+	where id = #{data.id}
+  </sql>
+  <update id="updateByPrimaryKey">
+    <include refid="sql_update" />
+  </update>
+  <insert id="batchInsert">
+    <foreach collection="list" index="index" item="data" open="" separator=";" close="">
+	  <include refid="sql_save_columns" /><include refid="sql_save_values" />
+	</foreach>
+  </insert>
+  <insert id="insertFillReturnId" keyProperty="data.id" useGeneratedKeys="true">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+  <insert id="insertFill">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+
+
+    <resultMap id="PageMap" type="me.xhw.entity.vo.OrderVo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="hospital_id" jdbcType="BIGINT" property="hospitalId" />
+        <result column="handler_name" jdbcType="VARCHAR" property="handlerName" />
+        <result column="pusher_name" jdbcType="VARCHAR" property="pusherName" />
+        <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
+        <result column="alarm_type" jdbcType="VARCHAR" property="alarmType" />
+        <result column="order_progress" jdbcType="VARCHAR" property="orderProgress" />
+        <result column="priority" jdbcType="VARCHAR" property="priority" />
+        <result column="situation" jdbcType="INTEGER" property="situation" />
+        <result column="handler_phone" jdbcType="VARCHAR" property="handlerPhone" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </resultMap>
+    <sql id="Base_Page_List">
+    id,hospital_id,handler_name,pusher_name,order_number,alarm_type,order_progress,priority,situation,handler_phone,address,create_time
+  </sql>
+    <sql id="sql_page_where">
+        <where>
+            <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+            <if test="null != data.hospitalId and '' != data.hospitalId">and hospital_id = #{data.hospitalId}</if>
+            <if test="null != data.handlerName and '' != data.handlerName">and handler_name = #{data.handlerName}</if>
+            <if test="null != data.pusherName and '' != data.pusherName">and pusher_name = #{data.pusherName}</if>
+            <if test="null != data.orderNumber and '' != data.orderNumber">and order_number like concat('%',#{data.orderNumber},'%') </if>
+            <if test="null != data.alarmType and '' != data.alarmType">and alarm_type = #{data.alarmType}</if>
+            <if test="null != data.orderProgress and '' != data.orderProgress">and order_progress = #{data.orderProgress}</if>
+            <if test="null != data.priority and '' != data.priority">and priority = #{data.priority}</if>
+            <if test="null != data.situation">and situation = #{data.situation}</if>
+            <if test="null != data.handlerPhone and '' != data.handlerPhone">and handler_phone = #{data.handlerPhone}</if>
+            <if test="null != data.address and '' != data.address">and address = #{data.address}</if>
+            <if test="null != data.createTime and '' != data.createTime">and create_time = #{data.createTime}</if>
+        </where>
+    </sql>
+
+
+  <select id="selectList" parameterType="com.base.entity.query.QueryParams" resultMap="PageMap">
+    select <include refid="Base_Page_List" />  from  `order`
+	  <include refid="sql_page_where" />
+	  <if test="groupColumn != null and '' != groupColumn">group by ${groupColumn}</if>
+	  <if test="orderColumn != null and '' != orderColumn">order by ${orderColumn}</if>
+	  <if test="currentPage != null  and pageSize != null">limit ${(currentPage-1)*pageSize},#{pageSize}</if>
+  </select>
+
+    <select id="selectHandedList" parameterType="com.base.entity.query.QueryParams" resultMap="PageMap">
+    select <include refid="Base_Page_List" />  from  `order`
+       <where>
+           <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+           <if test="null != data.hospitalId and '' != data.hospitalId">and hospital_id = #{data.hospitalId}</if>
+           <if test="null != data.handlerName and '' != data.handlerName">and handler_name = #{data.handlerName}</if>
+           <if test="null != data.pusherName and '' != data.pusherName">and pusher_name = #{data.pusherName}</if>
+           <if test="null != data.orderNumber and '' != data.orderNumber">and order_number like concat('%',#{data.orderNumber},'%') </if>
+           <if test="null != data.alarmType and '' != data.alarmType">and alarm_type = #{data.alarmType}</if>
+           <if test="null != data.orderProgress and '' != data.orderProgress">and order_progress = #{data.orderProgress}</if>
+           <if test="null != data.priority and '' != data.priority">and priority = #{data.priority}</if>
+           <if test="null != data.situation">and situation = #{data.situation}</if>
+           <if test="null != data.handlerPhone and '' != data.handlerPhone">and handler_phone = #{data.handlerPhone}</if>
+           <if test="null != data.address and '' != data.address">and address = #{data.address}</if>
+           <if test="null != data.createTime and '' != data.createTime">and create_time = #{data.createTime}</if>
+           and length(handler_phone)>0
+       </where>
+	  <if test="groupColumn != null and '' != groupColumn">group by ${groupColumn}</if>
+	  <if test="orderColumn != null and '' != orderColumn">order by ${orderColumn}</if>
+	  <if test="currentPage != null  and pageSize != null">limit ${(currentPage-1)*pageSize},#{pageSize}</if>
+  </select>
+
+
+  <select id="selectCount" parameterType="com.base.entity.query.QueryParams" resultType="java.lang.Integer">
+   SELECT COUNT(*) FROM  `order`
+     <where>
+         <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+     </where>
+  </select>
+
+    <select id="selectHandedCount" parameterType="com.base.entity.query.QueryParams" resultType="java.lang.Integer">
+   SELECT COUNT(*) FROM  `order`
+     <where>
+         <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+         and length(handler_phone)>0
+     </where>
+  </select>
+
+
+  <sql id="sql_save_columns">
+    insert into `order`(
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, id</if>
+	  <if test="null != data.hospitalId">, hospital_id</if>
+	  <if test="null != data.handlerName">, handler_name</if>
+	  <if test="null != data.pusherName">, pusher_name</if>
+	  <if test="null != data.orderNumber">, order_number</if>
+	  <if test="null != data.alarmType">, alarm_type</if>
+	  <if test="null != data.orderProgress">, order_progress</if>
+	  <if test="null != data.priority">, priority</if>
+	  <if test="null != data.situation">, situation</if>
+	  <if test="null != data.handlerPhone">, handler_phone</if>
+	  <if test="null != data.address">, address</if>
+	  <if test="null != data.createTime">, create_time</if>
+	  <if test="null != data.modifyTime">, modify_time</if>
+	  <if test="null != data.createBy">, create_by</if>
+	  <if test="null != data.modifyBy">, modify_by</if>
+	  <if test="null != data.remarks">, remarks</if>
+	</trim>
+	) values
+  </sql>
+  <sql id="sql_save_values">
+    (
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, #{data.id}</if>
+	  <if test="null != data.hospitalId">, #{data.hospitalId}</if>
+	  <if test="null != data.handlerName">, #{data.handlerName}</if>
+	  <if test="null != data.pusherName">, #{data.pusherName}</if>
+	  <if test="null != data.orderNumber">, #{data.orderNumber}</if>
+	  <if test="null != data.alarmType">, #{data.alarm_type}</if>
+	  <if test="null != data.orderProgress">, #{data.orderProgress}</if>
+	  <if test="null != data.priority">, #{data.priority}</if>
+	  <if test="null != data.situation">, #{data.situation}</if>
+	  <if test="null != data.handlerPhone">, #{data.handlerPhone}</if>
+	  <if test="null != data.address">, #{data.address}</if>
+	  <if test="null != data.createTime">, #{data.createTime}</if>
+	  <if test="null != data.modifyTime">, #{data.modifyTime}</if>
+	  <if test="null != data.createBy">, #{data.createBy}</if>
+	  <if test="null != data.modifyBy">, #{data.modifyBy}</if>
+	  <if test="null != data.remarks">, #{data.remarks}</if>
+	</trim>
+	)
+  </sql>
+
+    <resultMap id="RecordMap" type="me.xhw.entity.vo.RecordVo">
+        <result column="order_id" jdbcType="BIGINT" property="orderId" />
+        <result column="pusher_name" jdbcType="VARCHAR" property="pusherName" />
+        <result column="alarm_type" jdbcType="VARCHAR" property="alarmType" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </resultMap>
+
+    <select id="fetchRecord" resultMap="RecordMap">
+      select
+      order_id,
+      alarm_type,
+	  pusher_name,
+	  re.create_time
+      from order_record re
+      left join `order` o on o.id  = re.order_id
+      where handler_id = #{id}
+    </select>
+
+    <select id="queryOrderById"  resultMap="PageMap">
+      select <include refid="Base_Page_List" />  from  `order`
+      where id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.xhw.mapper.RolePermissionRelationMapper">
+  <resultMap id="BaseResultMap" type="me.xhw.entity.RolePermissionRelation">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="permission_id" jdbcType="BIGINT" property="permissionId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,role_id,permission_id,create_time,modify_time,create_by,modify_by,remarks
+  </sql>
+  <sql id="sql_where">
+    <where>
+      <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+      <if test="null != data.roleId and '' != data.roleId">and role_id = #{data.roleId}</if>
+      <if test="null != data.permissionId and '' != data.permissionId">and permission_id = #{data.permissionId}</if>
+      <if test="null != data.createTime and '' != data.createTime">and create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime and '' != data.modifyTime">and modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy and '' != data.createBy">and create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy and '' != data.modifyBy">and modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks and '' != data.remarks">and remarks = #{data.remarks}</if>
+	</where>
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+	  <include refid="Base_Column_List" />
+	  from
+	  role_permission_relation
+	where id = #{id}
+  </select>
+  <delete id="deleteByIds">
+    delete from role_permission_relation where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="deleteById">
+    delete from role_permission_relation where id =#{id}
+  </delete>
+  <sql id="sql_update">
+    update role_permission_relation
+	<trim prefix="set" prefixOverrides=",">
+      <if test="null != data.id">, id = #{data.id}</if>
+      <if test="null != data.roleId">, role_id = #{data.roleId}</if>
+      <if test="null != data.permissionId">, permission_id = #{data.permissionId}</if>
+      <if test="null != data.createTime">, create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime">, modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy">, create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy">, modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks">, remarks = #{data.remarks}</if>
+	</trim>
+	where id = #{data.id}
+  </sql>
+  <update id="updateByPrimaryKey">
+    <include refid="sql_update" />
+  </update>
+  <insert id="batchInsert">
+    <foreach collection="list" index="index" item="data" open="" separator=";" close="">
+	  <include refid="sql_save_columns" /><include refid="sql_save_values" />
+	</foreach>
+  </insert>
+  <insert id="insertFillReturnId" keyProperty="data.id" useGeneratedKeys="true">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+  <insert id="insertFill">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+  <select id="selectList" parameterType="com.base.entity.query.QueryParams" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />  from  role_permission_relation
+	  <include refid="sql_where" />
+	  <if test="groupColumn != null and '' != groupColumn">group by ${groupColumn}</if>
+	  <if test="orderColumn != null and '' != orderColumn">order by ${orderColumn}</if>
+	  <if test="currentPage != null  and pageSize != null">limit ${(currentPage-1)*pageSize},#{pageSize}</if>
+  </select>
+  <select id="selectCount" parameterType="com.base.entity.query.QueryParams" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM  role_permission_relation
+	  <include refid="sql_where" />
+	  
+  </select>
+  <sql id="sql_save_columns">
+    insert into role_permission_relation(
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, id</if>
+	  <if test="null != data.roleId">, role_id</if>
+	  <if test="null != data.permissionId">, permission_id</if>
+	  <if test="null != data.createTime">, create_time</if>
+	  <if test="null != data.modifyTime">, modify_time</if>
+	  <if test="null != data.createBy">, create_by</if>
+	  <if test="null != data.modifyBy">, modify_by</if>
+	  <if test="null != data.remarks">, remarks</if>
+	</trim>
+	) values
+  </sql>
+  <sql id="sql_save_values">
+    (
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, #{data.id}</if>
+	  <if test="null != data.roleId">, #{data.roleId}</if>
+	  <if test="null != data.permissionId">, #{data.permissionId}</if>
+	  <if test="null != data.createTime">, #{data.createTime}</if>
+	  <if test="null != data.modifyTime">, #{data.modifyTime}</if>
+	  <if test="null != data.createBy">, #{data.createBy}</if>
+	  <if test="null != data.modifyBy">, #{data.modifyBy}</if>
+	  <if test="null != data.remarks">, #{data.remarks}</if>
+	</trim>
+	)
+  </sql>
+</mapper>

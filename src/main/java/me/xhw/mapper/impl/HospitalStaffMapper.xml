@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.xhw.mapper.HospitalStaffMapper">
+  <resultMap id="BaseResultMap" type="me.xhw.entity.HospitalStaff">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="office_id" jdbcType="BIGINT" property="officeId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,user_id,office_id,create_time,modify_time,create_by,modify_by,remarks
+  </sql>
+  <sql id="sql_where">
+    <where>
+      <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+      <if test="null != data.userId and '' != data.userId">and user_id = #{data.userId}</if>
+      <if test="null != data.officeId and '' != data.officeId">and office_id = #{data.officeId}</if>
+      <if test="null != data.createTime and '' != data.createTime">and create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime and '' != data.modifyTime">and modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy and '' != data.createBy">and create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy and '' != data.modifyBy">and modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks and '' != data.remarks">and remarks = #{data.remarks}</if>
+	</where>
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+	  <include refid="Base_Column_List" />
+	  from
+	  hospital_staff
+	where id = #{id}
+  </select>
+  <delete id="deleteByIds">
+    delete from hospital_staff where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="deleteById">
+    delete from hospital_staff where id =#{id}
+  </delete>
+  <sql id="sql_update">
+    update hospital_staff
+	<trim prefix="set" prefixOverrides=",">
+      <if test="null != data.id">, id = #{data.id}</if>
+      <if test="null != data.userId">, user_id = #{data.userId}</if>
+      <if test="null != data.officeId">, office_id = #{data.officeId}</if>
+      <if test="null != data.createTime">, create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime">, modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy">, create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy">, modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks">, remarks = #{data.remarks}</if>
+	</trim>
+	where id = #{data.id}
+  </sql>
+  <update id="updateByPrimaryKey">
+    <include refid="sql_update" />
+  </update>
+  <insert id="batchInsert">
+    <foreach collection="list" index="index" item="data" open="" separator=";" close="">
+	  <include refid="sql_save_columns" /><include refid="sql_save_values" />
+	</foreach>
+  </insert>
+  <insert id="insertFillReturnId" keyProperty="data.id" useGeneratedKeys="true">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+  <insert id="insertFill">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+
+    <resultMap id="PageMap" type="me.xhw.entity.vo.HospitalStaffVo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="hospital_id" jdbcType="BIGINT" property="hospitalId" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="real_name" jdbcType="VARCHAR" property="realName" />
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+        <result column="office_name" jdbcType="VARCHAR" property="officeName" />
+        <result column="post_name" jdbcType="VARCHAR" property="postName" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    </resultMap>
+
+    <sql id="Base_Page_List">
+    hs.id,
+    u.hospital_id,
+	real_name,
+	dept_name,
+	office_name,
+	post_name,
+	role_name,
+	hs.create_time
+    </sql>
+
+    <sql id="sql_page_where">
+        <where>
+            <if test="null != data.id and '' != data.id">and hs.id = #{data.id}</if>
+            <if test="null != data.hospitalId and '' != data.hospitalId">and u.hospital_id = #{data.hospitalId}</if>
+            <if test="null != data.realName and '' != data.realName">and real_name = #{data.realName}</if>
+            <if test="null != data.deptName and '' != data.deptName">and dept_name = #{data.deptName}</if>
+            <if test="null != data.officeName and '' != data.officeName">and office_name = #{data.officeName}</if>
+            <if test="null != data.postName and '' != data.postName">and post_name = #{data.postName}</if>
+            <if test="null != data.roleName and '' != data.roleName">and role_name = #{data.roleName}</if>
+            <if test="null != data.createTime and '' != data.createTime">and hs.create_time = #{data.createTime}</if>
+        </where>
+    </sql>
+
+
+  <select id="selectList" parameterType="com.base.entity.query.QueryParams" resultMap="PageMap">
+    select <include refid="Base_Page_List" />
+      FROM
+      hospital_staff hs
+      LEFT JOIN `user` u ON hs.user_id = u.id
+      LEFT JOIN department d ON u.dept_id = d.id
+      LEFT JOIN hospital_office ho ON ho.id = hs.office_id
+      LEFT JOIN role r ON r.id = u.role_id
+	  <include refid="sql_page_where" />
+	  <if test="groupColumn != null and '' != groupColumn">group by ${groupColumn}</if>
+	  <if test="orderColumn != null and '' != orderColumn">order by ${orderColumn}</if>
+	  <if test="currentPage != null  and pageSize != null">limit ${(currentPage-1)*pageSize},#{pageSize}</if>
+  </select>
+  <select id="selectCount" parameterType="com.base.entity.query.QueryParams" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM  hospital_staff
+      <where>
+          <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+      </where>
+  </select>
+
+
+
+  <sql id="sql_save_columns">
+    insert into hospital_staff(
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, id</if>
+	  <if test="null != data.userId">, user_id</if>
+	  <if test="null != data.officeId">, office_id</if>
+	  <if test="null != data.createTime">, create_time</if>
+	  <if test="null != data.modifyTime">, modify_time</if>
+	  <if test="null != data.createBy">, create_by</if>
+	  <if test="null != data.modifyBy">, modify_by</if>
+	  <if test="null != data.remarks">, remarks</if>
+	</trim>
+	) values
+  </sql>
+  <sql id="sql_save_values">
+    (
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, #{data.id}</if>
+	  <if test="null != data.userId">, #{data.userId}</if>
+	  <if test="null != data.officeId">, #{data.officeId}</if>
+	  <if test="null != data.createTime">, #{data.createTime}</if>
+	  <if test="null != data.modifyTime">, #{data.modifyTime}</if>
+	  <if test="null != data.createBy">, #{data.createBy}</if>
+	  <if test="null != data.modifyBy">, #{data.modifyBy}</if>
+	  <if test="null != data.remarks">, #{data.remarks}</if>
+	</trim>
+	)
+  </sql>
+</mapper>

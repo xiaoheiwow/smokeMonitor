@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.xhw.mapper.OrderRecordMapper">
+  <resultMap id="BaseResultMap" type="me.xhw.entity.OrderRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="pusher_id" jdbcType="BIGINT" property="pusherId" />
+    <result column="handler_id" jdbcType="BIGINT" property="handlerId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,order_id,pusher_id,handler_id,create_time,modify_time,create_by,modify_by,remarks
+  </sql>
+  <sql id="sql_where">
+    <where>
+      <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+      <if test="null != data.orderId and '' != data.orderId">and order_id = #{data.orderId}</if>
+      <if test="null != data.pusherId and '' != data.pusherId">and pusher_id = #{data.pusherId}</if>
+      <if test="null != data.handlerId and '' != data.handlerId">and handler_id = #{data.handlerId}</if>
+      <if test="null != data.createTime and '' != data.createTime">and create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime and '' != data.modifyTime">and modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy and '' != data.createBy">and create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy and '' != data.modifyBy">and modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks and '' != data.remarks">and remarks = #{data.remarks}</if>
+	</where>
+  </sql>
+
+  <sql id="sql_update">
+    update order_record
+	<trim prefix="set" prefixOverrides=",">
+      <if test="null != data.id">, id = #{data.id}</if>
+      <if test="null != data.orderId">, order_id = #{data.orderId}</if>
+      <if test="null != data.pusherId">, pusher_id = #{data.pusherId}</if>
+      <if test="null != data.handlerId">, handler_id = #{data.handlerId}</if>
+      <if test="null != data.createTime">, create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime">, modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy">, create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy">, modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks">, remarks = #{data.remarks}</if>
+	</trim>
+	where id = #{data.id}
+  </sql>
+
+
+    <sql id="sql_updateByOrderId">
+        update order_record
+        <trim prefix="set" prefixOverrides=",">
+            <if test="null != data.id">, id = #{data.id}</if>
+            <if test="null != data.orderId">, order_id = #{data.orderId}</if>
+            <if test="null != data.pusherId">, pusher_id = #{data.pusherId}</if>
+            <if test="null != data.handlerId">, handler_id = #{data.handlerId}</if>
+            <if test="null != data.createTime">, create_time = #{data.createTime}</if>
+            <if test="null != data.modifyTime">, modify_time = #{data.modifyTime}</if>
+            <if test="null != data.createBy">, create_by = #{data.createBy}</if>
+            <if test="null != data.modifyBy">, modify_by = #{data.modifyBy}</if>
+            <if test="null != data.remarks">, remarks = #{data.remarks}</if>
+        </trim>
+        where order_id = #{data.orderId}
+    </sql>
+
+  <update id="updateByOrderId">
+    <include refid="sql_updateByOrderId" />
+  </update>
+
+  <sql id="sql_save_columns">
+    insert into order_record(
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, id</if>
+	  <if test="null != data.orderId">, order_id</if>
+	  <if test="null != data.pusherId">, pusher_id</if>
+	  <if test="null != data.handlerId">, handler_id</if>
+	  <if test="null != data.createTime">, create_time</if>
+	  <if test="null != data.modifyTime">, modify_time</if>
+	  <if test="null != data.createBy">, create_by</if>
+	  <if test="null != data.modifyBy">, modify_by</if>
+	  <if test="null != data.remarks">, remarks</if>
+	</trim>
+	) values
+  </sql>
+  <sql id="sql_save_values">
+    (
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, #{data.id}</if>
+	  <if test="null != data.orderId">, #{data.orderId}</if>
+	  <if test="null != data.pusherId">, #{data.pusherId}</if>
+	  <if test="null != data.handlerId">, #{data.handlerId}</if>
+	  <if test="null != data.createTime">, #{data.createTime}</if>
+	  <if test="null != data.modifyTime">, #{data.modifyTime}</if>
+	  <if test="null != data.createBy">, #{data.createBy}</if>
+	  <if test="null != data.modifyBy">, #{data.modifyBy}</if>
+	  <if test="null != data.remarks">, #{data.remarks}</if>
+	</trim>
+	)
+  </sql>
+</mapper>

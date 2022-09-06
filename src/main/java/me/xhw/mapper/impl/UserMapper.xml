@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.xhw.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="me.xhw.entity.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="hospital_id" jdbcType="BIGINT" property="hospitalId" />
+    <result column="dept_id" jdbcType="BIGINT" property="deptId" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="real_pass" jdbcType="VARCHAR" property="realPass" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="post_name" jdbcType="VARCHAR" property="postName" />
+    <result column="identification_number" jdbcType="VARCHAR" property="identificationNumber" />
+    <result column="is_enable" jdbcType="INTEGER" property="isEnable" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="need_reLogin" jdbcType="INTEGER" property="needRelogin" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,role_id,hospital_id,dept_id,real_name,account,real_pass,password,phone,sex,post_name,identification_number,is_enable,is_delete,create_time,modify_time,create_by,modify_by,remarks,need_reLogin
+  </sql>
+  <sql id="sql_where">
+    <where>
+      <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+      <if test="null != data.roleId and '' != data.roleId">and role_id = #{data.roleId}</if>
+      <if test="null != data.hospitalId and '' != data.hospitalId">and hospital_id = #{data.hospitalId}</if>
+      <if test="null != data.deptId and '' != data.deptId">and dept_id = #{data.deptId}</if>
+      <if test="null != data.realName and '' != data.realName">and real_name = #{data.realName}</if>
+      <if test="null != data.account and '' != data.account">and account = #{data.account}</if>
+      <if test="null != data.realPass and '' != data.realPass">and real_pass = #{data.realPass}</if>
+      <if test="null != data.password and '' != data.password">and password = #{data.password}</if>
+      <if test="null != data.phone and '' != data.phone">and phone = #{data.phone}</if>
+      <if test="null != data.sex and '' != data.sex">and sex = #{data.sex}</if>
+      <if test="null != data.postName and '' != data.postName">and post_name = #{data.postName}</if>
+      <if test="null != data.identificationNumber and '' != data.identificationNumber">and identification_number = #{data.identificationNumber}</if>
+      <if test="null != data.isEnable and '' != data.isEnable">and is_enable = #{data.isEnable}</if>
+      <if test="null != data.isDelete and '' != data.isDelete">and is_delete = #{data.isDelete}</if>
+      <if test="null != data.createTime and '' != data.createTime">and create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime and '' != data.modifyTime">and modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy and '' != data.createBy">and create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy and '' != data.modifyBy">and modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks and '' != data.remarks">and remarks = #{data.remarks}</if>
+      <if test="null != data.needRelogin and '' != data.needRelogin">and need_reLogin = #{data.needRelogin}</if>
+	</where>
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+	  <include refid="Base_Column_List" />
+	  from
+	  `user`
+	where id = #{id}
+  </select>
+
+    <select id="selectByAccount" resultMap="BaseResultMap">
+    select
+        <include refid="Base_Column_List" />
+      from  `user`
+      where account = #{account} and is_delete = 0
+    </select>
+
+
+
+    <select id="selectReLoginStatus" resultType="java.lang.Integer">
+        select need_reLogin from user where id=#{id} and is_delete=0
+    </select>
+
+
+  <delete id="deleteByIds">
+    delete from user where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="deleteById">
+    delete from user where id =#{id}
+  </delete>
+  <sql id="sql_update">
+    update user
+	<trim prefix="set" prefixOverrides=",">
+      <if test="null != data.id">, id = #{data.id}</if>
+      <if test="null != data.roleId">, role_id = #{data.roleId}</if>
+      <if test="null != data.hospitalId">, hospital_id = #{data.hospitalId}</if>
+      <if test="null != data.deptId">, dept_id = #{data.deptId}</if>
+      <if test="null != data.realName">, real_name = #{data.realName}</if>
+      <if test="null != data.account">, account = #{data.account}</if>
+      <if test="null != data.realPass">, real_pass = #{data.realPass}</if>
+      <if test="null != data.password">, password = #{data.password}</if>
+      <if test="null != data.phone">, phone = #{data.phone}</if>
+      <if test="null != data.sex">, sex = #{data.sex}</if>
+      <if test="null != data.postName">, post_name = #{data.postName}</if>
+      <if test="null != data.identificationNumber">, identification_number = #{data.identificationNumber}</if>
+      <if test="null != data.isEnable">, is_enable = #{data.isEnable}</if>
+      <if test="null != data.isDelete">, is_delete = #{data.isDelete}</if>
+      <if test="null != data.createTime">, create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime">, modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy">, create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy">, modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks">, remarks = #{data.remarks}</if>
+      <if test="null != data.needRelogin">, need_reLogin = #{data.needRelogin}</if>
+	</trim>
+	where id = #{data.id}
+  </sql>
+  <update id="updateByPrimaryKey">
+    <include refid="sql_update" />
+  </update>
+  <insert id="batchInsert">
+    <foreach collection="list" index="index" item="data" open="" separator=";" close="">
+	  <include refid="sql_save_columns" /><include refid="sql_save_values" />
+	</foreach>
+  </insert>
+  <insert id="insertFillReturnId" parameterType="me.xhw.entity.User" keyProperty="data.id" useGeneratedKeys="true">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+
+  <insert id="insertFill">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+
+    <resultMap id="UserListMap" type="me.xhw.entity.vo.UserVo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="hospital_id" jdbcType="BIGINT" property="hospitalId" />
+        <result column="real_name" jdbcType="VARCHAR" property="realName" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="account" jdbcType="VARCHAR" property="account" />
+        <result column="real_pass" jdbcType="VARCHAR" property="realPass" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="identification_number" jdbcType="VARCHAR" property="identificationNumber" />
+        <result column="is_enable" jdbcType="INTEGER" property="isEnable" />
+    </resultMap>
+
+
+    <sql id="sql_page_where">
+        <where>
+            <if test="null != data.id and '' != data.id">and u.id = #{data.id}</if>
+            <if test="null != data.hospitalId and '' != data.hospitalId">and hospital_id = #{data.hospitalId}</if>
+            <if test="null != data.realName and '' != data.realName">and real_name = #{data.realName}</if>
+            <if test="null != data.roleName and '' != data.roleName">and role_name = #{data.roleName}</if>
+            <if test="null != data.account and '' != data.account">and account = #{data.account}</if>
+            <if test="null != data.realPass and '' != data.realPass">and real_pass = #{data.realPass}</if>
+            <if test="null != data.phone and '' != data.phone">and phone = #{data.phone}</if>
+            <if test="null != data.identificationNumber and '' != data.identificationNumber">and identification_number = #{data.identificationNumber}</if>
+            <if test="null != data.isEnable and '' != data.isEnable">and is_enable = #{data.isEnable}</if>
+        </where>
+    </sql>
+
+
+
+  <select id="selectList" parameterType="com.base.entity.query.QueryParams" resultMap="UserListMap">
+    select
+      u.id,
+      hospital_id,
+      real_name,
+      role_name,
+      account,
+      real_pass,
+      phone,
+      identification_number,
+      is_enable
+      from  `user` u
+      left join `role` r on u.role_id = r.id
+	  <if test="groupColumn != null and '' != groupColumn">group by ${groupColumn}</if>
+	  <if test="orderColumn != null and '' != orderColumn">order by ${orderColumn}</if>
+	  <if test="currentPage != null  and pageSize != null">limit ${(currentPage-1)*pageSize},#{pageSize}</if>
+  </select>
+
+  <select id="selectCount" parameterType="com.base.entity.query.QueryParams" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM  `user`
+      <where>
+          <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+      </where>
+  </select>
+
+
+  <sql id="sql_save_columns">
+    insert into user(
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, id</if>
+	  <if test="null != data.roleId">, role_id</if>
+	  <if test="null != data.hospitalId">, hospital_id</if>
+	  <if test="null != data.deptId">, dept_id</if>
+	  <if test="null != data.realName">, real_name</if>
+	  <if test="null != data.account">, account</if>
+	  <if test="null != data.realPass">, real_pass</if>
+	  <if test="null != data.password">, password</if>
+	  <if test="null != data.phone">, phone</if>
+	  <if test="null != data.sex">, sex</if>
+	  <if test="null != data.postName">, post_name</if>
+	  <if test="null != data.identificationNumber">, identification_number</if>
+	  <if test="null != data.isEnable">, is_enable</if>
+	  <if test="null != data.isDelete">, is_delete</if>
+	  <if test="null != data.createTime">, create_time</if>
+	  <if test="null != data.modifyTime">, modify_time</if>
+	  <if test="null != data.createBy">, create_by</if>
+	  <if test="null != data.modifyBy">, modify_by</if>
+	  <if test="null != data.remarks">, remarks</if>
+	  <if test="null != data.needRelogin">, need_reLogin</if>
+	</trim>
+	) values
+  </sql>
+  <sql id="sql_save_values">
+    (
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, #{data.id}</if>
+	  <if test="null != data.roleId">, #{data.roleId}</if>
+	  <if test="null != data.hospitalId">, #{data.hospitalId}</if>
+	  <if test="null != data.deptId">, #{data.deptId}</if>
+	  <if test="null != data.realName">, #{data.realName}</if>
+	  <if test="null != data.account">, #{data.account}</if>
+	  <if test="null != data.realPass">, #{data.realPass}</if>
+	  <if test="null != data.password">, #{data.password}</if>
+	  <if test="null != data.phone">, #{data.phone}</if>
+	  <if test="null != data.sex">, #{data.sex}</if>
+	  <if test="null != data.postName">, #{data.postName}</if>
+	  <if test="null != data.identificationNumber">, #{data.identificationNumber}</if>
+	  <if test="null != data.isEnable">, #{data.isEnable}</if>
+	  <if test="null != data.isDelete">, #{data.isDelete}</if>
+	  <if test="null != data.createTime">, #{data.createTime}</if>
+	  <if test="null != data.modifyTime">, #{data.modifyTime}</if>
+	  <if test="null != data.createBy">, #{data.createBy}</if>
+	  <if test="null != data.modifyBy">, #{data.modifyBy}</if>
+	  <if test="null != data.remarks">, #{data.remarks}</if>
+	  <if test="null != data.needRelogin">, #{data.needRelogin}</if>
+	</trim>
+	)
+  </sql>
+
+
+    <update id="updateStatusById" >
+        update `user` set is_enable = is_enable^1 where id = #{id}
+    </update>
+
+    <resultMap id="SimpleMap" type="me.xhw.entity.vo.UserSelectVo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    </resultMap>
+
+    <select id="fetchUser" resultMap="SimpleMap">
+        SELECT distinct id , real_name FROM  `user` where hospital_id = #{hospitalId}
+    </select>
+    
+    <update id="updateLoginStatus">
+    update `user`
+    set need_reLogin = 0
+    where id = #{id}
+    </update>
+</mapper>

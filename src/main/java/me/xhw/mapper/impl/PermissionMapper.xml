@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.xhw.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="me.xhw.entity.Permission">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,parent_id,permission_name,create_time,modify_time,create_by,modify_by,remarks
+  </sql>
+  <sql id="sql_where">
+    <where>
+      <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+      <if test="null != data.parentId">and parent_id = #{data.parentId}</if>
+      <if test="null != data.permissionName and '' != data.permissionName">and permission_name = #{data.permissionName}</if>
+      <if test="null != data.createTime and '' != data.createTime">and create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime and '' != data.modifyTime">and modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy and '' != data.createBy">and create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy and '' != data.modifyBy">and modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks and '' != data.remarks">and remarks = #{data.remarks}</if>
+	</where>
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+	  <include refid="Base_Column_List" />
+	  from
+	  permission
+	where id = #{id}
+  </select>
+  <delete id="deleteByIds">
+    delete from permission where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="deleteById">
+    delete from permission where id =#{id}
+  </delete>
+  <sql id="sql_update">
+    update permission
+	<trim prefix="set" prefixOverrides=",">
+      <if test="null != data.id">, id = #{data.id}</if>
+      <if test="null != data.parentId">, parent_id = #{data.parentId}</if>
+      <if test="null != data.permissionName">, permission_name = #{data.permissionName}</if>
+      <if test="null != data.createTime">, create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime">, modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy">, create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy">, modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks">, remarks = #{data.remarks}</if>
+	</trim>
+	where id = #{data.id}
+  </sql>
+  <update id="updateByPrimaryKey">
+    <include refid="sql_update" />
+  </update>
+  <insert id="batchInsert">
+    <foreach collection="list" index="index" item="data" open="" separator=";" close="">
+	  <include refid="sql_save_columns" /><include refid="sql_save_values" />
+	</foreach>
+  </insert>
+  <insert id="insertFillReturnId" keyProperty="data.id" useGeneratedKeys="true">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+  <insert id="insertFill">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+  <select id="selectList" parameterType="com.base.entity.query.QueryParams" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />  from  permission
+	  <include refid="sql_where" />
+	  <if test="groupColumn != null and '' != groupColumn">group by ${groupColumn}</if>
+	  <if test="orderColumn != null and '' != orderColumn">order by ${orderColumn}</if>
+	  <if test="currentPage != null  and pageSize != null">limit ${(currentPage-1)*pageSize},#{pageSize}</if>
+  </select>
+  <select id="selectCount" parameterType="com.base.entity.query.QueryParams" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM  permission
+	  <include refid="sql_where" />
+	  
+  </select>
+  <sql id="sql_save_columns">
+    insert into permission(
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, id</if>
+	  <if test="null != data.parentId">, parent_id</if>
+	  <if test="null != data.permissionName">, permission_name</if>
+	  <if test="null != data.createTime">, create_time</if>
+	  <if test="null != data.modifyTime">, modify_time</if>
+	  <if test="null != data.createBy">, create_by</if>
+	  <if test="null != data.modifyBy">, modify_by</if>
+	  <if test="null != data.remarks">, remarks</if>
+	</trim>
+	) values
+  </sql>
+  <sql id="sql_save_values">
+    (
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, #{data.id}</if>
+	  <if test="null != data.parentId">, #{data.parentId}</if>
+	  <if test="null != data.permissionName">, #{data.permissionName}</if>
+	  <if test="null != data.createTime">, #{data.createTime}</if>
+	  <if test="null != data.modifyTime">, #{data.modifyTime}</if>
+	  <if test="null != data.createBy">, #{data.createBy}</if>
+	  <if test="null != data.modifyBy">, #{data.modifyBy}</if>
+	  <if test="null != data.remarks">, #{data.remarks}</if>
+	</trim>
+	)
+  </sql>
+
+    <resultMap id="SimpleMap" type="me.xhw.entity.Permission">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+        <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    </resultMap>
+
+
+    <select id="selectPermissionList" resultMap="SimpleMap">
+        select id,parent_id,permission_name from permission
+    </select>
+
+    <select id="selectSubId" resultType="Long">
+        select id from permission where parent_id = #{id}
+    </select>
+
+</mapper>

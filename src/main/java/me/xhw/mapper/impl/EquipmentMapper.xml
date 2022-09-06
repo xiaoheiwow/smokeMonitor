@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.xhw.mapper.EquipmentMapper">
+  <resultMap id="BaseResultMap" type="me.xhw.entity.Equipment">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="hospital_id" jdbcType="BIGINT" property="hospitalId" />
+    <result column="equip_name" jdbcType="VARCHAR" property="equipName" />
+    <result column="building" jdbcType="VARCHAR" property="building" />
+    <result column="equip_location" jdbcType="VARCHAR" property="equipLocation" />
+    <result column="ip_location" jdbcType="VARCHAR" property="ipLocation" />
+    <result column="equip_status" jdbcType="INTEGER" property="equipStatus" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,hospital_id,equip_name,building,equip_location,ip_location,equip_status,user_name,password,create_time,modify_time,create_by,modify_by,remarks
+  </sql>
+  <sql id="sql_where">
+    <where>
+      <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+      <if test="null != data.hospitalId and '' != data.hospitalId">and hospital_id = #{data.hospitalId}</if>
+      <if test="null != data.equipName and '' != data.equipName">and equip_name = #{data.equipName}</if>
+      <if test="null != data.building and '' != data.building">and building = #{data.building}</if>
+      <if test="null != data.equipLocation and '' != data.equipLocation">and equip_location = #{data.equipLocation}</if>
+      <if test="null != data.ipLocation and '' != data.ipLocation">and ip_location = #{data.ipLocation}</if>
+      <if test="null != data.equipStatus and '' != data.equipStatus">and equip_status = #{data.equipStatus}</if>
+      <if test="null != data.userName and '' != data.userName">and user_name = #{data.userName}</if>
+      <if test="null != data.password and '' != data.password">and password = #{data.password}</if>
+      <if test="null != data.createTime and '' != data.createTime">and create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime and '' != data.modifyTime">and modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy and '' != data.createBy">and create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy and '' != data.modifyBy">and modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks and '' != data.remarks">and remarks = #{data.remarks}</if>
+	</where>
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+	  <include refid="Base_Column_List" />
+	  from
+	  equipment
+	where id = #{id}
+  </select>
+  <delete id="deleteByIds">
+    delete from equipment where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="deleteById">
+    delete from equipment where id =#{id}
+  </delete>
+  <sql id="sql_update">
+    update equipment
+	<trim prefix="set" prefixOverrides=",">
+      <if test="null != data.id">, id = #{data.id}</if>
+      <if test="null != data.hospitalId">, hospital_id = #{data.hospitalId}</if>
+      <if test="null != data.equipName">, equip_name = #{data.equipName}</if>
+      <if test="null != data.building">, building = #{data.building}</if>
+      <if test="null != data.equipLocation">, equip_location = #{data.equipLocation}</if>
+      <if test="null != data.ipLocation">, ip_location = #{data.ipLocation}</if>
+      <if test="null != data.equipStatus">, equip_status = #{data.equipStatus}</if>
+      <if test="null != data.userName">, user_name = #{data.userName}</if>
+      <if test="null != data.password">, password = #{data.password}</if>
+      <if test="null != data.createTime">, create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime">, modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy">, create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy">, modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks">, remarks = #{data.remarks}</if>
+	</trim>
+	where id = #{data.id}
+  </sql>
+  <update id="updateByPrimaryKey">
+    <include refid="sql_update" />
+  </update>
+  <insert id="batchInsert">
+    <foreach collection="list" index="index" item="data" open="" separator=";" close="">
+	  <include refid="sql_save_columns" /><include refid="sql_save_values" />
+	</foreach>
+  </insert>
+  <insert id="insertFillReturnId" keyProperty="data.id" useGeneratedKeys="true">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+  <insert id="insertFill">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+
+    <resultMap id="EquipListMap" type="me.xhw.entity.vo.EquipmentVo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="hospital_name" jdbcType="VARCHAR" property="hospitalName" />
+        <result column="position" jdbcType="VARCHAR" property="position" />
+        <result column="equip_name" jdbcType="VARCHAR" property="equipName" />
+        <result column="building" jdbcType="VARCHAR" property="building" />
+        <result column="equip_location" jdbcType="VARCHAR" property="equipLocation" />
+        <result column="ip_location" jdbcType="VARCHAR" property="ipLocation" />
+        <result column="equip_status" jdbcType="INTEGER" property="equipStatus" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+    </resultMap>
+
+    <sql id="sql_list_where">
+        <where>
+            <if test="null != data.id and '' != data.id">and e.id = #{data.id}</if>
+            <if test="null != data.equipName and '' != data.equipName">and equip_name like concat('%',#{data.equipName},'%')</if>
+            <if test="null != data.hospitalName and '' != data.hospitalName">and hospital_name = #{data.hospitalName}</if>
+            <if test="null != data.position and '' != data.position">and `position` = #{data.position}</if>
+            <if test="null != data.building and '' != data.building">and building like concat('%',#{data.building},'%')</if>
+            <if test="null != data.equipLocation and '' != data.equipLocation">and equip_location like concat('%',#{data.equipLocation},'%')</if>
+            <if test="null != data.ipLocation and '' != data.ipLocation">and ip_location = #{data.ipLocation}</if>
+            <if test="null != data.equipStatus">and equip_status = #{data.equipStatus}</if>
+            <if test="null != data.userName and '' != data.userName">and user_name = #{data.userName}</if>
+            <if test="null != data.password and '' != data.password">and password = #{data.password}</if>
+        </where>
+    </sql>
+
+    <sql id="Equip_List">
+    e.id,hospital_name,CONCAT(hospital_region,hospital_location) as `position` ,equip_name,building,equip_location,ip_location,equip_status,user_name,`password`
+    </sql>
+
+  <select id="selectList" parameterType="com.base.entity.query.QueryParams" resultMap="EquipListMap">
+    select <include refid="Equip_List" />
+      from equipment e
+      left join hospital h on e.hospital_id = h.id
+      <include refid="sql_list_where" />
+	  <if test="groupColumn != null and '' != groupColumn">group by ${groupColumn}</if>
+	  <if test="orderColumn != null and '' != orderColumn">order by ${orderColumn}</if>
+	  <if test="currentPage != null  and pageSize != null">limit ${(currentPage-1)*pageSize},#{pageSize}</if>
+  </select>
+
+  <select id="selectCount" parameterType="com.base.entity.query.QueryParams" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM  equipment
+      <where>
+          <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+      </where>
+  </select>
+
+  <sql id="sql_save_columns">
+    insert into equipment(
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, id</if>
+	  <if test="null != data.hospitalId">, hospital_id</if>
+	  <if test="null != data.equipName">, equip_name</if>
+	  <if test="null != data.building">, building</if>
+	  <if test="null != data.equipLocation">, equip_location</if>
+	  <if test="null != data.ipLocation">, ip_location</if>
+	  <if test="null != data.equipStatus">, equip_status</if>
+	  <if test="null != data.userName">, user_name</if>
+	  <if test="null != data.password">, password</if>
+	  <if test="null != data.createTime">, create_time</if>
+	  <if test="null != data.modifyTime">, modify_time</if>
+	  <if test="null != data.createBy">, create_by</if>
+	  <if test="null != data.modifyBy">, modify_by</if>
+	  <if test="null != data.remarks">, remarks</if>
+	</trim>
+	) values
+  </sql>
+  <sql id="sql_save_values">
+    (
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, #{data.id}</if>
+	  <if test="null != data.hospitalId">, #{data.hospitalId}</if>
+	  <if test="null != data.equipName">, #{data.equipName}</if>
+	  <if test="null != data.building">, #{data.building}</if>
+	  <if test="null != data.equipLocation">, #{data.equipLocation}</if>
+	  <if test="null != data.ipLocation">, #{data.ipLocation}</if>
+	  <if test="null != data.equipStatus">, #{data.equipStatus}</if>
+	  <if test="null != data.userName">, #{data.userName}</if>
+	  <if test="null != data.password">, #{data.password}</if>
+	  <if test="null != data.createTime">, #{data.createTime}</if>
+	  <if test="null != data.modifyTime">, #{data.modifyTime}</if>
+	  <if test="null != data.createBy">, #{data.createBy}</if>
+	  <if test="null != data.modifyBy">, #{data.modifyBy}</if>
+	  <if test="null != data.remarks">, #{data.remarks}</if>
+	</trim>
+	)
+  </sql>
+
+
+    <resultMap id="SimplePageMap" type="me.xhw.entity.vo.SimpleEquipVo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="equip_name" jdbcType="VARCHAR" property="equipName" />
+        <result column="building" jdbcType="VARCHAR" property="building" />
+        <result column="equip_location" jdbcType="VARCHAR" property="equipLocation" />
+    </resultMap>
+
+    <select id="queryListByHospitalId" resultMap="SimplePageMap">
+        select id,equip_name,building,equip_location
+        from equipment
+        where hospital_id = #{hospitalId}
+    </select>
+
+    <update id="updateStatusById" >
+        update equipment
+        set equip_status = equip_status^1
+        where id = #{id}
+    </update>
+
+
+
+
+</mapper>

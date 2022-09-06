@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.xhw.mapper.HospitalMapper">
+  <resultMap id="BaseResultMap" type="me.xhw.entity.Hospital">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="hospital_name" jdbcType="VARCHAR" property="hospitalName" />
+    <result column="hospital_level" jdbcType="VARCHAR" property="hospitalLevel" />
+    <result column="hospital_type" jdbcType="VARCHAR" property="hospitalType" />
+    <result column="hospital_region" jdbcType="VARCHAR" property="hospitalRegion" />
+    <result column="hospital_location" jdbcType="VARCHAR" property="hospitalLocation" />
+    <result column="equipment_quantity" jdbcType="INTEGER" property="equipmentQuantity" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,hospital_name,hospital_level,hospital_type,hospital_region,hospital_location,equipment_quantity,create_time,modify_time,create_by,modify_by,remarks
+  </sql>
+  <sql id="sql_where">
+    <where>
+      <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+      <if test="null != data.hospitalName and '' != data.hospitalName">and hospital_name = #{data.hospitalName}</if>
+      <if test="null != data.hospitalLevel and '' != data.hospitalLevel">and hospital_level = #{data.hospitalLevel}</if>
+      <if test="null != data.hospitalType and '' != data.hospitalType">and hospital_type = #{data.hospitalType}</if>
+      <if test="null != data.hospitalRegion and '' != data.hospitalRegion">and hospital_region = #{data.hospitalRegion}</if>
+      <if test="null != data.hospitalLocation and '' != data.hospitalLocation">and hospital_location = #{data.hospitalLocation}</if>
+      <if test="null != data.equipmentQuantity and '' != data.equipmentQuantity">and equipment_quantity = #{data.equipmentQuantity}</if>
+      <if test="null != data.createTime and '' != data.createTime">and create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime and '' != data.modifyTime">and modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy and '' != data.createBy">and create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy and '' != data.modifyBy">and modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks and '' != data.remarks">and remarks = #{data.remarks}</if>
+	</where>
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+	  <include refid="Base_Column_List" />
+	  from
+	  hospital
+	where id = #{id}
+  </select>
+  <delete id="deleteByIds">
+    delete from hospital where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="deleteById">
+    delete from hospital where id =#{id}
+  </delete>
+  <sql id="sql_update">
+    update hospital
+	<trim prefix="set" prefixOverrides=",">
+      <if test="null != data.id">, id = #{data.id}</if>
+      <if test="null != data.hospitalName">, hospital_name = #{data.hospitalName}</if>
+      <if test="null != data.hospitalLevel">, hospital_level = #{data.hospitalLevel}</if>
+      <if test="null != data.hospitalType">, hospital_type = #{data.hospitalType}</if>
+      <if test="null != data.hospitalRegion">, hospital_region = #{data.hospitalRegion}</if>
+      <if test="null != data.hospitalLocation">, hospital_location = #{data.hospitalLocation}</if>
+      <if test="null != data.equipmentQuantity">, equipment_quantity = #{data.equipmentQuantity}</if>
+      <if test="null != data.createTime">, create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime">, modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy">, create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy">, modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks">, remarks = #{data.remarks}</if>
+	</trim>
+	where id = #{data.id}
+  </sql>
+  <update id="updateByPrimaryKey">
+    <include refid="sql_update" />
+  </update>
+  <insert id="batchInsert">
+    <foreach collection="list" index="index" item="data" open="" separator=";" close="">
+	  <include refid="sql_save_columns" /><include refid="sql_save_values" />
+	</foreach>
+  </insert>
+  <insert id="insertFillReturnId" keyProperty="data.id" useGeneratedKeys="true">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+  <insert id="insertFill">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+
+
+
+<resultMap id="BasePage" type="me.xhw.entity.vo.HospitalListVo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="hospital_name" jdbcType="VARCHAR" property="hospitalName" />
+    <result column="hospital_level" jdbcType="VARCHAR" property="hospitalLevel" />
+    <result column="hospital_type" jdbcType="VARCHAR" property="hospitalType" />
+    <result column="hospital_region" jdbcType="VARCHAR" property="hospitalRegion" />
+    <result column="hospital_location" jdbcType="VARCHAR" property="hospitalLocation" />
+    <result column="equipment_quantity" jdbcType="INTEGER" property="equipmentQuantity" />
+</resultMap>
+
+<sql id="sql_page_where">
+    <where>
+        <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+        <if test="null != data.hospitalName and '' != data.hospitalName">and hospital_name like concat('%',#{data.hospitalName},'%')</if>
+        <if test="null != data.hospitalLevel and '' != data.hospitalLevel">and hospital_level = #{data.hospitalLevel}</if>
+        <if test="null != data.hospitalType and '' != data.hospitalType">and hospital_type = #{data.hospitalType}</if>
+        <if test="null != data.hospitalRegion and '' != data.hospitalRegion">and hospital_region = #{data.hospitalRegion}</if>
+        <if test="null != data.hospitalLocation and '' != data.hospitalLocation">and hospital_location = #{data.hospitalLocation}</if>
+        <if test="null != data.equipmentQuantity and '' != data.equipmentQuantity">and equipment_quantity = #{data.equipmentQuantity}</if>
+    </where>
+</sql>
+
+  <select id="selectList" parameterType="com.base.entity.query.QueryParams" resultMap="BasePage">
+    select <include refid="Base_Column_List" />  from  hospital
+	  <include refid="sql_page_where" />
+	  <if test="groupColumn != null and '' != groupColumn">group by ${groupColumn}</if>
+	  <if test="orderColumn != null and '' != orderColumn">order by ${orderColumn}</if>
+	  <if test="currentPage != null  and pageSize != null">limit ${(currentPage-1)*pageSize},#{pageSize}</if>
+  </select>
+  <select id="selectCount" parameterType="com.base.entity.query.QueryParams" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM  hospital
+	  <include refid="sql_page_where" />
+  </select>
+
+
+
+  <sql id="sql_save_columns">
+    insert into hospital(
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, id</if>
+	  <if test="null != data.hospitalName">, hospital_name</if>
+	  <if test="null != data.hospitalLevel">, hospital_level</if>
+	  <if test="null != data.hospitalType">, hospital_type</if>
+	  <if test="null != data.hospitalRegion">, hospital_region</if>
+	  <if test="null != data.hospitalLocation">, hospital_location</if>
+	  <if test="null != data.equipmentQuantity">, equipment_quantity</if>
+	  <if test="null != data.createTime">, create_time</if>
+	  <if test="null != data.modifyTime">, modify_time</if>
+	  <if test="null != data.createBy">, create_by</if>
+	  <if test="null != data.modifyBy">, modify_by</if>
+	  <if test="null != data.remarks">, remarks</if>
+	</trim>
+	) values
+  </sql>
+  <sql id="sql_save_values">
+    (
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, #{data.id}</if>
+	  <if test="null != data.hospitalName">, #{data.hospitalName}</if>
+	  <if test="null != data.hospitalLevel">, #{data.hospitalLevel}</if>
+	  <if test="null != data.hospitalType">, #{data.hospitalType}</if>
+	  <if test="null != data.hospitalRegion">, #{data.hospitalRegion}</if>
+	  <if test="null != data.hospitalLocation">, #{data.hospitalLocation}</if>
+	  <if test="null != data.equipmentQuantity">, #{data.equipmentQuantity}</if>
+	  <if test="null != data.createTime">, #{data.createTime}</if>
+	  <if test="null != data.modifyTime">, #{data.modifyTime}</if>
+	  <if test="null != data.createBy">, #{data.createBy}</if>
+	  <if test="null != data.modifyBy">, #{data.modifyBy}</if>
+	  <if test="null != data.remarks">, #{data.remarks}</if>
+	</trim>
+	)
+  </sql>
+
+    <select id="fetchLevel" resultType="java.lang.String">
+        SELECT distinct hospital_level FROM  hospital
+    </select>
+
+    <select id="fetchRegion" resultType="java.lang.String">
+        SELECT distinct hospital_region FROM  hospital
+    </select>
+
+
+    <resultMap id="SimpleMap" type="me.xhw.entity.vo.HospitalSelectVo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="hospital_name" jdbcType="VARCHAR" property="hospitalName" />
+    </resultMap>
+
+    <select id="fetchName" resultMap="SimpleMap">
+        SELECT distinct id , hospital_name FROM  hospital
+    </select>
+
+
+</mapper>

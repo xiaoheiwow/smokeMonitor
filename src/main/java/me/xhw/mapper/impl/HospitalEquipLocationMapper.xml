@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.xhw.mapper.HospitalEquipLocationMapper">
+  <resultMap id="BaseResultMap" type="me.xhw.entity.HospitalEquipLocation">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="hospital_id" jdbcType="BIGINT" property="hospitalId" />
+    <result column="location_name" jdbcType="VARCHAR" property="locationName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,hospital_id,location_name,create_time,modify_time,create_by,modify_by,remarks
+  </sql>
+  <sql id="sql_where">
+    <where>
+      <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+      <if test="null != data.hospitalId and '' != data.hospitalId">and hospital_id = #{data.hospitalId}</if>
+      <if test="null != data.locationName and '' != data.locationName">and location_name = #{data.locationName}</if>
+      <if test="null != data.createTime and '' != data.createTime">and create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime and '' != data.modifyTime">and modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy and '' != data.createBy">and create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy and '' != data.modifyBy">and modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks and '' != data.remarks">and remarks = #{data.remarks}</if>
+	</where>
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+	  <include refid="Base_Column_List" />
+	  from
+	  hospital_equip_location
+	where id = #{id}
+  </select>
+  <delete id="deleteByIds">
+    delete from hospital_equip_location where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="deleteById">
+    delete from hospital_equip_location where id =#{id}
+  </delete>
+  <sql id="sql_update">
+    update hospital_equip_location
+	<trim prefix="set" prefixOverrides=",">
+      <if test="null != data.id">, id = #{data.id}</if>
+      <if test="null != data.hospitalId">, hospital_id = #{data.hospitalId}</if>
+      <if test="null != data.locationName">, location_name = #{data.locationName}</if>
+      <if test="null != data.createTime">, create_time = #{data.createTime}</if>
+      <if test="null != data.modifyTime">, modify_time = #{data.modifyTime}</if>
+      <if test="null != data.createBy">, create_by = #{data.createBy}</if>
+      <if test="null != data.modifyBy">, modify_by = #{data.modifyBy}</if>
+      <if test="null != data.remarks">, remarks = #{data.remarks}</if>
+	</trim>
+	where id = #{data.id}
+  </sql>
+  <update id="updateByPrimaryKey">
+    <include refid="sql_update" />
+  </update>
+  <insert id="batchInsert">
+    <foreach collection="list" index="index" item="data" open="" separator=";" close="">
+	  <include refid="sql_save_columns" /><include refid="sql_save_values" />
+	</foreach>
+  </insert>
+  <insert id="insertFillReturnId" keyProperty="data.id" useGeneratedKeys="true">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+  <insert id="insertFill">
+    <include refid="sql_save_columns" /><include refid="sql_save_values" />
+  </insert>
+
+    <resultMap id="SimpleListMap" type="me.xhw.entity.vo.EquipLocationVo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="hospital_id" jdbcType="BIGINT" property="hospitalId" />
+        <result column="location_name" jdbcType="VARCHAR" property="locationName" />
+    </resultMap>
+
+    <sql id="sql_page_where">
+        <where>
+            <if test="null != data.id and '' != data.id">and id = #{data.id}</if>
+            <if test="null != data.hospitalId and '' != data.hospitalId">and hospital_id = #{data.hospitalId}</if>
+            <if test="null != data.locationName and '' != data.locationName">and location_name = #{data.locationName}</if>
+        </where>
+    </sql>
+
+  <select id="selectList" parameterType="com.base.entity.query.QueryParams" resultMap="SimpleListMap">
+    select id,hospital_id,location_name  from  hospital_equip_location
+	  <include refid="sql_page_where" />
+	  <if test="groupColumn != null and '' != groupColumn">group by ${groupColumn}</if>
+	  <if test="orderColumn != null and '' != orderColumn">order by ${orderColumn}</if>
+	  <if test="currentPage != null  and pageSize != null">limit ${(currentPage-1)*pageSize},#{pageSize}</if>
+  </select>
+  <select id="selectCount" parameterType="com.base.entity.query.QueryParams" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM  hospital_equip_location
+	  <include refid="sql_page_where" />
+	  
+  </select>
+
+
+
+  <sql id="sql_save_columns">
+    insert into hospital_equip_location(
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, id</if>
+	  <if test="null != data.hospitalId">, hospital_id</if>
+	  <if test="null != data.locationName">, location_name</if>
+	  <if test="null != data.createTime">, create_time</if>
+	  <if test="null != data.modifyTime">, modify_time</if>
+	  <if test="null != data.createBy">, create_by</if>
+	  <if test="null != data.modifyBy">, modify_by</if>
+	  <if test="null != data.remarks">, remarks</if>
+	</trim>
+	) values
+  </sql>
+  <sql id="sql_save_values">
+    (
+	<trim prefixOverrides=",">
+	  <if test="null != data.id">, #{data.id}</if>
+	  <if test="null != data.hospitalId">, #{data.hospitalId}</if>
+	  <if test="null != data.locationName">, #{data.locationName}</if>
+	  <if test="null != data.createTime">, #{data.createTime}</if>
+	  <if test="null != data.modifyTime">, #{data.modifyTime}</if>
+	  <if test="null != data.createBy">, #{data.createBy}</if>
+	  <if test="null != data.modifyBy">, #{data.modifyBy}</if>
+	  <if test="null != data.remarks">, #{data.remarks}</if>
+	</trim>
+	)
+  </sql>
+</mapper>
