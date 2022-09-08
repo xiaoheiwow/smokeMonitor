@@ -277,7 +277,7 @@ public class EquipmentServiceImpl implements EquipmentService{
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public ResponseResult<Integer> batchUpdate(List<Equipment> equipmentList) {
 		ResponseResult<Integer> result = new ResponseResult<>(TextCode.UPDATE_SUCCESS.text,TextCode.UPDATE_SUCCESS.code);
 
@@ -296,7 +296,7 @@ public class EquipmentServiceImpl implements EquipmentService{
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public ResponseResult<Integer> updateStatusById(Long id) {
 		ResponseResult<Integer> result = new ResponseResult<>(TextCode.UPDATE_SUCCESS.text,TextCode.UPDATE_SUCCESS.code);
 		try {

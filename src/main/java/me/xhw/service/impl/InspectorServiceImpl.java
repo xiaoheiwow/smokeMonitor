@@ -3,10 +3,11 @@ package me.xhw.service.impl;
 import me.xhw.entity.User;
 import me.xhw.entity.vo.InspectorVo;
 import me.xhw.mapper.UserMapper;
-import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Date;
@@ -105,20 +106,20 @@ public class InspectorServiceImpl implements InspectorService{
 	 *根据Id更新
 	 */
 	@Override
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public ResponseResult<Inspector> modifyFillById(InspectorVo inspectorVo){
 		ResponseResult<Inspector> result = new ResponseResult<>(TextCode.UPDATE_SUCCESS.text,TextCode.UPDATE_SUCCESS.code);
 		try {
 			//更新巡查人员表
 			Inspector inspector = new Inspector();
-			BeanUtils.copyProperties(inspector,inspectorVo);
+			BeanUtils.copyProperties(inspectorVo,inspector);
 			inspector.setModifyTime(new Date());
 			inspector.setModifyBy(Oauth2Util.getCurrentUser());
 			int i = inspectorMapper.updateByPrimaryKey(inspector);
 
 			//更新用户表
 			User user = new User();
-			BeanUtils.copyProperties(user,inspectorVo);
+			BeanUtils.copyProperties(inspectorVo,user);
 			Long userId = inspectorMapper.selectById(inspectorVo.getId()).getUserId();
 			user.setId(userId);
 			user.setModifyTime(new Date());
@@ -145,7 +146,7 @@ public class InspectorServiceImpl implements InspectorService{
 	 * @return 新增user的主键ID
 	 */
 	@Override
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public ResponseResult<Long> insertFill(InspectorVo inspectorVo){
 		ResponseResult<Long> result = new ResponseResult<>(TextCode.INSERT_SUCCESS.text,TextCode.INSERT_SUCCESS.code);
 		try {
@@ -154,7 +155,7 @@ public class InspectorServiceImpl implements InspectorService{
 			userMapper.insertFillReturnId(user);
 			//插入巡查人员
 			Inspector inspector = new Inspector();
-			BeanUtils.copyProperties(inspector,inspectorVo);
+			BeanUtils.copyProperties(inspectorVo,inspector);
 			inspector.setLastTime(new Date());
 			inspector.setIsBanned(0);
 			inspector.setUserId(user.getId());

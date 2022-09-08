@@ -35,7 +35,7 @@ public class PermissionServiceImpl implements PermissionService{
 	 *查询权限列表
 	 */
 	@Override
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public ResponseResult<List<PermissionVo>> getPermissionList() {
 		ResponseResult<List<PermissionVo>> result = new ResponseResult<>(TextCode.RESPONSE_SUCCESS.text,TextCode.RESPONSE_SUCCESS.code);
 		List<Permission> list =  permissionMapper.selectPermissionList();

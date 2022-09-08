@@ -1,9 +1,6 @@
 package me.xhw.entity.result;
 
-/**
- * @author 许德承
- * @date 2022/4/8 10:06
- */
+
 public enum BaseTextCode {
 
     NO_PERMISSION("000104", "没有权限"),
@@ -13,8 +10,8 @@ public enum BaseTextCode {
     USER_FORBIDDEN("000108", "账户被禁用"),
     ;
 
-
     public String code;
+
     public String text;
 
     private BaseTextCode(String code, String text) {

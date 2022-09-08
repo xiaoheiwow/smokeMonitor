@@ -65,8 +65,8 @@ public class TokenConfig {
                 String claimsStr = jwt.getClaims();
                 Map<String, Object> claims = objectMapper.parseMap(claimsStr);
                 //查看用户有没有修改过，修改后需要重新登陆
-                String user_name = claims.get("user_name").toString();
-                Integer reLogin = userService.isReLogin(Long.valueOf(user_name.substring(user_name.lastIndexOf("||") + 2)));
+                String userName = claims.get("user_name").toString();
+                Integer reLogin = userService.isReLogin(Long.valueOf(userName.substring(userName.lastIndexOf("||") + 2)));
                 if(reLogin == 1 ){
                     throw new ReLoginException("User is changed, must reLogin ");
                 }

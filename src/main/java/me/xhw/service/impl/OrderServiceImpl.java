@@ -6,10 +6,12 @@ import me.xhw.entity.dto.UpdateOrderHandlerDTO;
 import me.xhw.entity.vo.OrderVo;
 import me.xhw.entity.vo.RecordVo;
 import me.xhw.mapper.OrderRecordMapper;
-import org.apache.commons.beanutils.BeanUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Date;
@@ -134,12 +136,12 @@ public class OrderServiceImpl implements OrderService{
 	 *根据Id更新
 	 */
 	@Override
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public ResponseResult<Integer> modifyFillById(OrderVo orderVo){
 		ResponseResult<Integer> result = new ResponseResult<>(TextCode.UPDATE_SUCCESS.text,TextCode.UPDATE_SUCCESS.code);
 		try {
 			Order order = new Order();
-			BeanUtils.copyProperties(order,orderVo);
+			BeanUtils.copyProperties(orderVo,order);
 			order.setModifyTime(new Date());
 			order.setModifyBy(Oauth2Util.getCurrentUser());
 			int i = orderMapper.updateByPrimaryKey(order);
@@ -323,12 +325,12 @@ public class OrderServiceImpl implements OrderService{
 	 * @return
 	 */
 	@Override
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public ResponseResult<Integer> updateHandler(UpdateOrderHandlerDTO updateOrderHandlerDTO) {
 		ResponseResult<Integer> result = new ResponseResult<>(TextCode.UPDATE_SUCCESS.text,TextCode.UPDATE_SUCCESS.code);
 		try {
 			Order order = new Order();
-			BeanUtils.copyProperties(order,updateOrderHandlerDTO);
+			BeanUtils.copyProperties(updateOrderHandlerDTO,order);
 			order.setModifyTime(new Date());
 			order.setModifyBy(Oauth2Util.getCurrentUser());
 			orderMapper.updateByPrimaryKey(order);

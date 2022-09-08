@@ -7,10 +7,12 @@ import me.xhw.entity.vo.HospitalStaffVo;
 import me.xhw.mapper.DepartmentMapper;
 import me.xhw.mapper.HospitalOfficeMapper;
 import me.xhw.mapper.UserMapper;
-import org.apache.commons.beanutils.BeanUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Date;
@@ -109,13 +111,13 @@ public class HospitalStaffServiceImpl implements HospitalStaffService{
 	 *根据Id更新
 	 */
 	@Override
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public ResponseResult<Integer> modifyFillById(HospitalStaffUpdateDTO hospitalStaffUpdateDTO){
 		ResponseResult<Integer> result = new ResponseResult<>(TextCode.UPDATE_SUCCESS.text,TextCode.UPDATE_SUCCESS.code);
 		try {
 			//更新医护人员表
 			HospitalStaff hospitalStaff = new HospitalStaff();
-			BeanUtils.copyProperties(hospitalStaff,hospitalStaffUpdateDTO);
+			BeanUtils.copyProperties(hospitalStaffUpdateDTO,hospitalStaff);
 			hospitalStaff.setModifyTime(new Date());
 			hospitalStaff.setModifyBy(Oauth2Util.getCurrentUser());
 			//

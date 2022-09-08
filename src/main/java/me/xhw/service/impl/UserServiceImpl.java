@@ -7,11 +7,12 @@ import me.xhw.entity.vo.DepartmentSelectVo;
 import me.xhw.entity.vo.UserSelectVo;
 import me.xhw.entity.vo.UserVo;
 import me.xhw.mapper.RoleMapper;
-import org.apache.commons.beanutils.BeanUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -121,12 +122,12 @@ public class UserServiceImpl implements UserService{
 	 *根据Id更新
 	 */
 	@Override
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public ResponseResult<User> modifyFillById(UserVo userVo){
 		ResponseResult<User> result = new ResponseResult<>(TextCode.UPDATE_SUCCESS.text,TextCode.UPDATE_SUCCESS.code);
 		try {
 			User user = new User();
-			BeanUtils.copyProperties(user, userVo);
+			BeanUtils.copyProperties(userVo,user);
 			user.setRoleId(roleMapper.queryRoleId(userVo.getRoleName()));
 			user.setModifyTime(new Date());
 			user.setModifyBy(Oauth2Util.getCurrentUser());
@@ -150,13 +151,13 @@ public class UserServiceImpl implements UserService{
 	 *插入
 	 */
 	@Override
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public ResponseResult<Integer> insertFill(UserVo userVo){
 		ResponseResult<Integer> result = new ResponseResult<>(TextCode.INSERT_SUCCESS.text,TextCode.INSERT_SUCCESS.code);
 		int i = 0;
 		try {
 			User user = new User();
-			BeanUtils.copyProperties(user,userVo);
+			BeanUtils.copyProperties(userVo,user);
 			user.setRoleId(roleMapper.queryRoleId(userVo.getRoleName()));
 			user.setCreateTime(new Date());
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getRealPass()));
@@ -305,7 +306,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public ResponseResult<UserVo> loginByPass(UserLoginDTO userLoginDTO) {
 		ResponseResult<UserVo> result = new ResponseResult<>(BaseTextCode.LOGIN_SUCCESS.text,BaseTextCode.LOGIN_SUCCESS.code);
 		UserVo data = new UserVo();
@@ -340,7 +341,7 @@ public class UserServiceImpl implements UserService{
 			if(user.getNeedRelogin() == 1){
 				Integer i  = userMapper.updateLoginStatus(user.getId());
 			}
-			BeanUtils.copyProperties(data,user);
+			BeanUtils.copyProperties(user,data);
 			String roleName = roleMapper.selectById(user.getRoleId()).getRoleName();
             data.setRoleName(roleName);
 			data.setToken(token);

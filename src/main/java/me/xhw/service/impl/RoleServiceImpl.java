@@ -170,7 +170,7 @@ public class RoleServiceImpl implements RoleService{
 	 * @return 插入行数
 	 */
 	@Override
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public ResponseResult<Integer> insertRoleAndPermission(AddRoleDTO addRoleDTO){
 		ResponseResult<Integer> result = new ResponseResult<>(TextCode.INSERT_SUCCESS.text,TextCode.INSERT_SUCCESS.code);
 		int i = 0,j = -1;
