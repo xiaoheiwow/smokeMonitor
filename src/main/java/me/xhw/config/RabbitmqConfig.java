@@ -17,7 +17,7 @@ public class RabbitmqConfig {
     /**
      * RabbitMQ的队列主题名称
      */
-    public static final String RABBITMQ_DEMO_TOPIC = "rabbitmq.demo.topic";
+    public static final String RABBITMQ_DEMO_DIRECT = "rabbitmq.demo.direct";
 
     /**
      * RabbitMQ的DIRECT交换机名称
@@ -88,7 +88,7 @@ public class RabbitmqConfig {
          * 3、exclusive: 是否独享、排外的。如果设置为true，定义为排他队列。则只有创建者可以使用此队列。也就是private私有的。
          * 4、autoDelete: 是否自动删除。也就是临时队列。当最后一个消费者断开连接后，会自动删除。
          * */
-        return new Queue(RabbitmqConfig.RABBITMQ_DEMO_TOPIC, true, false, false);
+        return new Queue(RabbitmqConfig.RABBITMQ_DEMO_DIRECT, true, false, false);
     }
 
     @Bean
