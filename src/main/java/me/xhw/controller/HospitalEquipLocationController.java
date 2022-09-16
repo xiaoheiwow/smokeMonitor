@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/equipLocation")
-@Api(tags="设备点位管理",description="提供增、删、改、查")
+@Api(tags="设备点位管理")
 public class HospitalEquipLocationController {
 
 	@Autowired

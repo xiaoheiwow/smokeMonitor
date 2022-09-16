@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/inspector")
-@Api(tags="巡查人员管理",description="提供增、删、改、查")
+@Api(tags="巡查人员管理")
 public class InspectorController {
 
 	@Autowired

@@ -3,8 +3,11 @@ package me.xhw.entity.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Arrays;
+
 /**
  * 添加角色传输对象
+ * @author xiaoheiwow
  */
 public class AddRoleDTO {
     /**
@@ -33,5 +36,13 @@ public class AddRoleDTO {
 
     public void setPermissions(Long[] permissions) {
         this.permissions = permissions;
+    }
+
+    @Override
+    public String toString() {
+        return "AddRoleDTO{" +
+                "roleName='" + roleName + '\'' +
+                ", permissions=" + Arrays.toString(permissions) +
+                '}';
     }
 }

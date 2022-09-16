@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/equipment")
-@Api(tags="设备管理",description="提供增、删、改、查")
+@Api(tags="设备管理")
 public class EquipmentController {
 
 	@Autowired

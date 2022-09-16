@@ -7,6 +7,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+/**
+ * @author xiaoheiwow
+ */
 public class HospitalStaffUpdateDTO {
 
 

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/rolePermissionRelation")
-@Api(tags="角色权限关系管理",description="提供增、删、改、查")
+@Api(tags="角色权限关系管理")
 public class RolePermissionRelationController {
 
 	@Autowired

@@ -3,6 +3,9 @@ package me.xhw.entity.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * @author xiaoheiwow
+ */
 public class UserLoginDTO {
 
     @ApiModelProperty(value = "用户名",required = true)
@@ -24,5 +27,13 @@ public class UserLoginDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "UserLoginDTO{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

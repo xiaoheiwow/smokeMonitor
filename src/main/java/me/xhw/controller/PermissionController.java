@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/permission")
-@Api(tags="权限管理",description="提供增、删、改、查")
+@Api(tags="权限管理")
 public class PermissionController {
 
 	@Autowired

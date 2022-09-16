@@ -25,11 +25,6 @@ public class BaseUserDetailServiceImpl implements UserDetailsService {
             return null;
         }
         String[] authorities = new String[]{"if need ,i can do it"};
-//        List<String> list = baseUserDao.getPermissions(user.getId());
-//        if(null != list && list.size() >0){
-//            authorities = new String[list.size()];
-//            list.toArray(authorities);
-//        }
         return User.withUsername(user.getAccount()+"||"+user.getRealName()+"||"+user.getId()).password(user.getPassword()).authorities(authorities).build();
     }
 }

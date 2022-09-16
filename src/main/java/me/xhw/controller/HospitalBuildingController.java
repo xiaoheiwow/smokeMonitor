@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/building")
-@Api(tags="楼宇管理",description="提供增、删、改、查")
+@Api(tags="楼宇管理")
 public class HospitalBuildingController {
 
 	@Autowired

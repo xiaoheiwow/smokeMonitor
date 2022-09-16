@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/department")
-@Api(tags="部门管理",description="提供增、删、改、查")
+@Api(tags="部门管理")
 public class DepartmentController {
 
 	@Autowired

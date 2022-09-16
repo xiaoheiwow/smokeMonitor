@@ -1,6 +1,10 @@
 package me.xhw.entity.result;
 
 
+/**
+ * @author xiaoheiwow
+ */
+
 public enum BaseTextCode {
 
     NO_PERMISSION("000104", "没有权限"),

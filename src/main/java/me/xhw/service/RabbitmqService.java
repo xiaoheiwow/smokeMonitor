@@ -8,4 +8,6 @@ package me.xhw.service;
 public interface RabbitmqService {
 
     String sendMsg(String msg);
+
+    String getMsg();
 }

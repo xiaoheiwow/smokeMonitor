@@ -25,4 +25,9 @@ public class TestController {
         return rabbitmqService.sendMsg(msg);
     }
 
+
+    @PostMapping("/getMsg")
+    public String getMsg() throws Exception {
+        return rabbitmqService.getMsg();
+    }
 }

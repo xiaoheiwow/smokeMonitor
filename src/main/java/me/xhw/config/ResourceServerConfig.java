@@ -12,9 +12,6 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 
 import javax.servlet.http.HttpServletResponse;
 
-//import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-//import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-
 
 @Configuration
 @EnableResourceServer

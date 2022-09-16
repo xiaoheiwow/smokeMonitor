@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/role")
-@Api(tags="角色管理",description="提供增、删、改、查")
+@Api(tags="角色管理")
 public class RoleController {
 
 	@Autowired

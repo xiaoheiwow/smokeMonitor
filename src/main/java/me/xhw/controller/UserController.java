@@ -26,7 +26,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @RestController
 @RequestMapping("/user")
-@Api(tags="用户管理",description="提供增、删、改、查")
+@Api(tags="用户管理")
 public class UserController {
 
 	@Autowired

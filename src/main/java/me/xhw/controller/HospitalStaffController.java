@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/hospitalStaff")
-@Api(tags="医务人员管理",description="提供增、删、改、查")
+@Api(tags="医务人员管理")
 public class HospitalStaffController {
 
 	@Autowired

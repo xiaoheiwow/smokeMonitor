@@ -5,6 +5,7 @@ import me.xhw.service.RabbitmqService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,14 +21,13 @@ public class RabbitmqServiceImpl implements RabbitmqService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     @Override
     public String sendMsg(String msg) {
         try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String msgId = UUID.randomUUID().toString().replace("-", "").substring(0, 32);
             String sendTime = sdf.format(new Date());
-            Map<String, Object> map = new HashMap<>();
+            Map<String, Object> map = new HashMap<>(16);
             map.put("msgId", msgId);
             map.put("sendTime", sendTime);
             map.put("msg", msg);
@@ -39,5 +39,12 @@ public class RabbitmqServiceImpl implements RabbitmqService {
         }
     }
 
-
+    @Override
+    public String getMsg() {
+        Object o = rabbitTemplate.receiveAndConvert("rabbitmq.demo.direct");
+        if(ObjectUtils.isEmpty(o)){
+            return "queue is empty now !";
+        }
+        return o.toString();
+    }
 }

@@ -2,6 +2,9 @@ package me.xhw.entity.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * @author xiaoheiwow
+ */
 public class UpdateOrderHandlerDTO {
 
 
@@ -42,5 +45,14 @@ public class UpdateOrderHandlerDTO {
 
     public void setHandlerName(String handlerName) {
         this.handlerName = handlerName;
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateOrderHandlerDTO{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", handlerName='" + handlerName + '\'' +
+                '}';
     }
 }

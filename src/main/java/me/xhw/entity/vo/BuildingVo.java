@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 楼宇列表视图对象
+ * @author xiaoheiwow
  */
 public class BuildingVo {
     @ApiModelProperty(value = "", required = false)

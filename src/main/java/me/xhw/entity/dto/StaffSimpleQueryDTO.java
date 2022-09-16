@@ -3,6 +3,9 @@ package me.xhw.entity.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * @author xiaoheiwow
+ */
 public class StaffSimpleQueryDTO {
 
 
@@ -74,5 +77,16 @@ public class StaffSimpleQueryDTO {
 
     public void setRealName(String realName) {
         this.realName = realName;
+    }
+
+    @Override
+    public String toString() {
+        return "StaffSimpleQueryDTO{" +
+                "hospitalId=" + hospitalId +
+                ", deptId=" + deptId +
+                ", roleId=" + roleId +
+                ", postName='" + postName + '\'' +
+                ", realName='" + realName + '\'' +
+                '}';
     }
 }

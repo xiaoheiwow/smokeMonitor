@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/hospital")
-@Api(tags="医院管理",description="提供增、删、改、查")
+@Api(tags="医院管理")
 public class HospitalController {
 
 	@Autowired
@@ -77,7 +77,7 @@ public class HospitalController {
 	}
 
 
-	//------------------------------
+
 	@GetMapping("/queryById/{id}")
 	@ApiOperation(value = "根据id查询")
 	@ApiImplicitParam(name = "id", value = "数字", required = true, dataType = "Long", paramType = "query")
