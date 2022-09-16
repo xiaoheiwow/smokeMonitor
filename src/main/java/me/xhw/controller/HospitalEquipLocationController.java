@@ -31,19 +31,8 @@ public class HospitalEquipLocationController {
 		return hospitalEquipLocationService.queryForList(queryParams);
 	}
 
-//	@GetMapping("/queryById/{id}")
-//	@ApiOperation(value = "根据id查询")
-//	@ApiImplicitParam(name = "id", value = "数字", required = true, dataType = "Long", paramType = "query")
-//	public ResponseResult<HospitalEquipLocation> queryById(@PathVariable("id")Long id){
-//		return hospitalEquipLocationService.queryById(id);
-//	}
-//
-//	@PostMapping("/queryForPage")
-//	@ApiOperation(value = "查询分页")
-//	public ResponseResult<PageEntity> queryForPage(@RequestBody QueryParams<HospitalEquipLocation> queryParams){
-//		return hospitalEquipLocationService.queryForPage(queryParams);
-//	}
-//
+
+
 	@PostMapping("/modifyFillById")
 	@ApiOperation(value = "根据id修改")
 	public ResponseResult<HospitalEquipLocation> modifyFillById(@RequestBody HospitalEquipLocation hospitalEquipLocation){
@@ -68,17 +57,5 @@ public class HospitalEquipLocationController {
 	public ResponseResult<Integer> insertFill(@RequestBody HospitalEquipLocation hospitalEquipLocation){
 		return hospitalEquipLocationService.insertFill(hospitalEquipLocation);
 	}
-//
-//	@PostMapping("/insertFillReturnId")
-//	@ApiOperation(value = "新增返回主键")
-//	public ResponseResult<HospitalEquipLocation> insertFillReturnId(@RequestBody HospitalEquipLocation hospitalEquipLocation){
-//		return hospitalEquipLocationService.insertFillReturnId(hospitalEquipLocation);
-//	}
-//
-//	@PostMapping("/batchSave")
-//	@ApiOperation(value = "批量新增")
-//	public ResponseResult<Integer> batchSave(@RequestBody List<HospitalEquipLocation> hospitalEquipLocationList){
-//		return 	hospitalEquipLocationService.batchSave(hospitalEquipLocationList);
-//	}
-//
+
 }

@@ -74,23 +74,12 @@ public class EquipmentController {
 	}
 
 
-//	@GetMapping("/queryById/{id}")
-//	@ApiOperation(value = "根据id查询")
-//	@ApiImplicitParam(name = "id", value = "数字", required = true, dataType = "Long", paramType = "query")
-//	public ResponseResult<Equipment> queryById(@PathVariable("id")Long id){
-//		return equipmentService.queryById(id);
-//	}
-
-
 
 	@PostMapping("/modifyFillById")
 	@ApiOperation(value = "根据id修改")
 	public ResponseResult<Equipment> modifyFillById(@RequestBody Equipment equipment){
 		return equipmentService.modifyFillById(equipment);
 	}
-
-
-
 
 
 	@PostMapping("/insertFill")
@@ -100,16 +89,4 @@ public class EquipmentController {
 	}
 
 
-//	@PostMapping("/insertFillReturnId")
-//	@ApiOperation(value = "新增返回主键")
-//	public ResponseResult<Equipment> insertFillReturnId(@RequestBody Equipment equipment){
-//		return equipmentService.insertFillReturnId(equipment);
-//	}
-//
-//	@PostMapping("/batchSave")
-//	@ApiOperation(value = "批量新增")
-//	public ResponseResult<Integer> batchSave(@RequestBody List<Equipment> equipmentList){
-//		return 	equipmentService.batchSave(equipmentList);
-//	}
-//
 }

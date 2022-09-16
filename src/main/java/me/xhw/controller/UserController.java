@@ -8,7 +8,6 @@ import com.base.entity.page.PageEntity;
 import com.base.entity.query.QueryParams;
 import me.xhw.entity.User;
 import me.xhw.entity.dto.UserLoginDTO;
-import me.xhw.entity.vo.DepartmentSelectVo;
 import me.xhw.entity.vo.UserSelectVo;
 import me.xhw.entity.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,18 +54,6 @@ public class UserController {
 		return userService.loginByPass(userLoginDTO);
 	}
 
-//	@PostMapping("/queryForList")
-//	@ApiOperation(value = "查询list")
-//	public ResponseResult<List<UserVo>> queryForList(@RequestBody QueryParams<UserVo> queryParams){
-//		return userService.queryForList(queryParams);
-//	}
-//
-//	@GetMapping("/queryById/{id}")
-//	@ApiOperation(value = "根据id查询")
-//	@ApiImplicitParam(name = "id", value = "数字", required = true, dataType = "Long", paramType = "query")
-//	public ResponseResult<User> queryById(@PathVariable("id")Long id){
-//		return userService.queryById(id);
-//	}
 
 	@PostMapping("/queryForPage")
 	@ApiOperation(value = "查询分页")
@@ -117,10 +104,4 @@ public class UserController {
 
 
 
-//	@PostMapping("/batchSave")
-//	@ApiOperation(value = "批量新增")
-//	public ResponseResult<Integer> batchSave(@RequestBody List<User> userList){
-//		return 	userService.batchSave(userList);
-//	}
-	
 }

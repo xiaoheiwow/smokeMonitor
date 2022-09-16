@@ -27,18 +27,6 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 
-//	@PostMapping("/queryForList")
-//	@ApiOperation(value = "查询list")
-//	public ResponseResult<List<OrderVo>> queryForList(@RequestBody QueryParams<OrderVo> queryParams){
-//		return orderService.queryForList(queryParams);
-//	}
-//
-//	@GetMapping("/queryById/{id}")
-//	@ApiOperation(value = "根据id查询")
-//	@ApiImplicitParam(name = "id", value = "数字", required = true, dataType = "Long", paramType = "query")
-//	public ResponseResult<Order> queryById(@PathVariable("id")Long id){
-//		return orderService.queryById(id);
-//	}
 
 	@PostMapping("/queryForPage")
 	@ApiOperation(value = "查询分页")
@@ -83,11 +71,6 @@ public class OrderController {
 		return orderService.deleteByIds(ids);
 	}
 
-//	@PostMapping("/insertFill")
-//	@ApiOperation(value = "新增")
-//	public ResponseResult<Integer> insertFill(@RequestBody Order order){
-//		return orderService.insertFill(order);
-//	}
 
 	@PostMapping("/updateHandler")
 	@ApiOperation(value = "更新工单负责人")
@@ -96,17 +79,4 @@ public class OrderController {
 	}
 
 
-
-//	@PostMapping("/insertFillReturnId")
-//	@ApiOperation(value = "新增返回主键")
-//	public ResponseResult<Order> insertFillReturnId(@RequestBody Order order){
-//		return orderService.insertFillReturnId(order);
-//	}
-//
-//	@PostMapping("/batchSave")
-//	@ApiOperation(value = "批量新增")
-//	public ResponseResult<Integer> batchSave(@RequestBody List<Order> orderList){
-//		return 	orderService.batchSave(orderList);
-//	}
-	
 }

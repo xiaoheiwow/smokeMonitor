@@ -30,13 +30,6 @@ public class HospitalBuildingController {
 	public ResponseResult<List<BuildingVo>> queryForList(@RequestBody QueryParams<BuildingVo> queryParams){
 		return hospitalBuildingService.queryForList(queryParams);
 	}
-//
-//	@GetMapping("/queryById/{id}")
-//	@ApiOperation(value = "根据id查询")
-//	@ApiImplicitParam(name = "id", value = "数字", required = true, dataType = "Long", paramType = "query")
-//	public ResponseResult<HospitalBuilding> queryById(@PathVariable("id")Long id){
-//		return hospitalBuildingService.queryById(id);
-//	}
 
 	@PostMapping("/queryForPage")
 	@ApiOperation(value = "查询分页")
@@ -68,17 +61,6 @@ public class HospitalBuildingController {
 	public ResponseResult<Integer> insertFill(@RequestBody HospitalBuilding hospitalBuilding){
 		return hospitalBuildingService.insertFill(hospitalBuilding);
 	}
-//
-//	@PostMapping("/insertFillReturnId")
-//	@ApiOperation(value = "新增返回主键")
-//	public ResponseResult<HospitalBuilding> insertFillReturnId(@RequestBody HospitalBuilding hospitalBuilding){
-//		return hospitalBuildingService.insertFillReturnId(hospitalBuilding);
-//	}
-//
-//	@PostMapping("/batchSave")
-//	@ApiOperation(value = "批量新增")
-//	public ResponseResult<Integer> batchSave(@RequestBody List<HospitalBuilding> hospitalBuildingList){
-//		return 	hospitalBuildingService.batchSave(hospitalBuildingList);
-//	}
+
 	
 }

@@ -27,13 +27,6 @@ public class RoleController {
 	@Autowired
 	private RoleService roleService;
 
-//	@PostMapping("/queryForList")
-//	@ApiOperation(value = "查询list")
-//	public ResponseResult<List<Role>> queryForList(@RequestBody QueryParams<Role> queryParams){
-//		return roleService.queryForList(queryParams);
-//	}
-
-
 
 	@PostMapping("/queryForPage")
 	@ApiOperation(value = "查询分页")
@@ -72,17 +65,5 @@ public class RoleController {
 		return roleService.fetchRoleName();
 	}
 
-
-//	@PostMapping("/insertFillReturnId")
-//	@ApiOperation(value = "新增返回主键")
-//	public ResponseResult<Role> insertFillReturnId(@RequestBody Role role){
-//		return roleService.insertFillReturnId(role);
-//	}
-//
-//	@PostMapping("/batchSave")
-//	@ApiOperation(value = "批量新增")
-//	public ResponseResult<Integer> batchSave(@RequestBody List<Role> roleList){
-//		return 	roleService.batchSave(roleList);
-//	}
 
 }

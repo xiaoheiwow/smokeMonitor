@@ -32,18 +32,6 @@ public class HospitalOfficeController {
 		return hospitalOfficeService.queryForList(queryParams);
 	}
 
-//	@GetMapping("/queryById/{id}")
-//	@ApiOperation(value = "根据id查询")
-//	@ApiImplicitParam(name = "id", value = "数字", required = true, dataType = "Long", paramType = "query")
-//	public ResponseResult<HospitalOffice> queryById(@PathVariable("id")Long id){
-//		return hospitalOfficeService.queryById(id);
-//	}
-//
-//	@PostMapping("/queryForPage")
-//	@ApiOperation(value = "查询分页")
-//	public ResponseResult<PageEntity> queryForPage(@RequestBody QueryParams<HospitalOffice> queryParams){
-//		return hospitalOfficeService.queryForPage(queryParams);
-//	}
 
 
 	@PostMapping("/modifyFillById")
@@ -76,16 +64,5 @@ public class HospitalOfficeController {
 	public ResponseResult<List<OfficeSelectVo>> fetchName(@PathVariable("id") Long id){
 		return hospitalOfficeService.fetchName(id);
 	}
-//	@PostMapping("/insertFillReturnId")
-//	@ApiOperation(value = "新增返回主键")
-//	public ResponseResult<HospitalOffice> insertFillReturnId(@RequestBody HospitalOffice hospitalOffice){
-//		return hospitalOfficeService.insertFillReturnId(hospitalOffice);
-//	}
-//
-//	@PostMapping("/batchSave")
-//	@ApiOperation(value = "批量新增")
-//	public ResponseResult<Integer> batchSave(@RequestBody List<HospitalOffice> hospitalOfficeList){
-//		return 	hospitalOfficeService.batchSave(hospitalOfficeList);
-//	}
-//
+
 }

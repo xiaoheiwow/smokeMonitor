@@ -63,31 +63,4 @@ public class DepartmentController {
 		return departmentService.fetchName(id);
 	}
 
-//	@GetMapping("/queryById/{id}")
-//	@ApiOperation(value = "根据id查询")
-//	@ApiImplicitParam(name = "id", value = "数字", required = true, dataType = "Long", paramType = "query")
-//	public ResponseResult<Department> queryById(@PathVariable("id")Long id){
-//		return departmentService.queryById(id);
-//	}
-//
-//	@PostMapping("/queryForPage")
-//	@ApiOperation(value = "查询分页")
-//	public ResponseResult<PageEntity> queryForPage(@RequestBody QueryParams<Department> queryParams){
-//		return departmentService.queryForPage(queryParams);
-//	}
-//
-
-
-//	@PostMapping("/insertFillReturnId")
-//	@ApiOperation(value = "新增返回主键")
-//	public ResponseResult<Department> insertFillReturnId(@RequestBody Department department){
-//		return departmentService.insertFillReturnId(department);
-//	}
-//
-//	@PostMapping("/batchSave")
-//	@ApiOperation(value = "批量新增")
-//	public ResponseResult<Integer> batchSave(@RequestBody List<Department> departmentList){
-//		return 	departmentService.batchSave(departmentList);
-//	}
-	
 }

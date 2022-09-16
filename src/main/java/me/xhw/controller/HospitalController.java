@@ -91,17 +91,6 @@ public class HospitalController {
 		return hospitalService.insertFill(hospital);
 	}
 
-//	@PostMapping("/insertFillReturnId")
-//	@ApiOperation(value = "新增返回主键")
-//	public ResponseResult<Hospital> insertFillReturnId(@RequestBody Hospital hospital){
-//		return hospitalService.insertFillReturnId(hospital);
-//	}
-//
-//	@PostMapping("/batchSave")
-//	@ApiOperation(value = "批量新增")
-//	public ResponseResult<Integer> batchSave(@RequestBody List<Hospital> hospitalList){
-//		return 	hospitalService.batchSave(hospitalList);
-//	}
-//
+
 
 }

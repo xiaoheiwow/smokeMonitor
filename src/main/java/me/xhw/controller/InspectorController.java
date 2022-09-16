@@ -24,18 +24,6 @@ public class InspectorController {
 	@Autowired
 	private InspectorService inspectorService;
 
-//	@PostMapping("/queryForList")
-//	@ApiOperation(value = "查询list")
-//	public ResponseResult<List<InspectorVo>> queryForList(@RequestBody QueryParams<InspectorVo> queryParams){
-//		return inspectorService.queryForList(queryParams);
-//	}
-//
-//	@GetMapping("/queryById/{id}")
-//	@ApiOperation(value = "根据id查询")
-//	@ApiImplicitParam(name = "id", value = "数字", required = true, dataType = "Long", paramType = "query")
-//	public ResponseResult<Inspector> queryById(@PathVariable("id")Long id){
-//		return inspectorService.queryById(id);
-//	}
 
 	@PostMapping("/queryForPage")
 	@ApiOperation(value = "查询分页")
@@ -75,19 +63,5 @@ public class InspectorController {
 		return inspectorService.banInspectorById(id);
 	}
 
-
-
-
-//	@PostMapping("/insertFillReturnId")
-//	@ApiOperation(value = "新增返回主键")
-//	public ResponseResult<Inspector> insertFillReturnId(@RequestBody Inspector inspector){
-//		return inspectorService.insertFillReturnId(inspector);
-//	}
-//
-//	@PostMapping("/batchSave")
-//	@ApiOperation(value = "批量新增")
-//	public ResponseResult<Integer> batchSave(@RequestBody List<Inspector> inspectorList){
-//		return 	inspectorService.batchSave(inspectorList);
-//	}
 	
 }

@@ -27,18 +27,7 @@ public class HospitalStaffController {
 	@Autowired
 	private HospitalStaffService hospitalStaffService;
 
-//	@PostMapping("/queryForList")
-//	@ApiOperation(value = "查询list")
-//	public ResponseResult<List<HospitalStaffVo>> queryForList(@RequestBody QueryParams<HospitalStaffVo> queryParams){
-//		return hospitalStaffService.queryForList(queryParams);
-//	}
 
-//	@GetMapping("/queryById/{id}")
-//	@ApiOperation(value = "根据id查询")
-//	@ApiImplicitParam(name = "id", value = "数字", required = true, dataType = "Long", paramType = "query")
-//	public ResponseResult<HospitalStaff> queryById(@PathVariable("id")Long id){
-//		return hospitalStaffService.queryById(id);
-//	}
 
 	@PostMapping("/queryForPage")
 	@ApiOperation(value = "查询分页")
@@ -73,16 +62,4 @@ public class HospitalStaffController {
 		return hospitalStaffService.insertFill(hospitalStaffUpdateDTO);
 	}
 
-//	@PostMapping("/insertFillReturnId")
-//	@ApiOperation(value = "新增返回主键")
-//	public ResponseResult<HospitalStaff> insertFillReturnId(@RequestBody HospitalStaff hospitalStaff){
-//		return hospitalStaffService.insertFillReturnId(hospitalStaff);
-//	}
-//
-//	@PostMapping("/batchSave")
-//	@ApiOperation(value = "批量新增")
-//	public ResponseResult<Integer> batchSave(@RequestBody List<HospitalStaff> hospitalStaffList){
-//		return 	hospitalStaffService.batchSave(hospitalStaffList);
-//	}
-//
 }
